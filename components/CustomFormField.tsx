@@ -9,9 +9,12 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import "react-phone-number-input/style.css";
+import PhoneInput from "react-phone-number-input";
 import { Input } from "@/components/ui/input";
 import { Control, Field } from "react-hook-form";
 import { FormFieldType } from "./forms/PateintForm";
+import Image from "next/image";
 
 interface CustomeProps {
   control: Control<any>;
@@ -29,7 +32,46 @@ interface CustomeProps {
 }
 
 const RenderField = ({ field, props }: { field: any; props: CustomeProps }) => {
-  return <Input type="text" placeholder="John Doe" />;
+  const { fieldType, iconSrc, iconAlt, placeholder } = props;
+  switch (fieldType) {
+    case FormFieldType.INPUT:
+      return (
+        <div className="flex rounded-md border border-dark-500 bg-dark-500">
+          {iconSrc && (
+            <Image
+              src={iconSrc}
+              width={24}
+              height={24}
+              alt={iconAlt || "icon"}
+              className="ml-2"
+            />
+          )}
+          <FormControl>
+            <Input
+              placeholder={placeholder}
+              {...field}
+              className="shad-input border-0"
+            />
+          </FormControl>
+        </div>
+      );
+    case FormFieldType.PHONE_INPUT:
+      return (
+        <FormControl>
+          <PhoneInput
+            defaultCountry="RW"
+            placeholder={placeholder}
+            international
+            withCountryCallingCode
+            value={field.value as string | undefined}
+            onChange={field.onChange}
+            className="shad-input"
+          />
+        </FormControl>
+      );
+    default:
+      break;
+  }
 };
 
 const CustomFormField = (props: CustomeProps) => {
