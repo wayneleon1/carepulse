@@ -1,14 +1,21 @@
+import { ID, Query } from "node-appwrite";
+import { users } from "../appwrite.config";
+import { parseStringify } from "../utils";
+
 export const createUser = async (user: CreateUserParams) => {
-   //   try {
-  //     const newUser = await database.createDocument(
-  //       DATABASE_ID,
-  //       PATIENT_COLLECTION_ID,
-  //       ID.unique(),
-  //       user
-  //     );
-  //     return newUser;
-  //   } catch (error) {
-  //     console.log(error);
-  //     throw error;
-  //   }
+  try {
+    const newUser = await users.create(
+      ID.unique(),
+      user.email,
+      user.phone,
+      undefined,
+      user.name
+    );
+    return parseStringify({ newUser });
+  } catch (error: any) {
+    if (error && error?.code === 409) {
+      const documents = await users.list([Query.equal("email", user.email)]);
+      return documents?.users[0];
+    }
+  }
 };
