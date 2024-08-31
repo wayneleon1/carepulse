@@ -32,7 +32,7 @@ const PateintForm = () => {
       phone: "",
     },
   });
- 
+
   async function onSubmit({
     name,
     email,
@@ -42,10 +42,11 @@ const PateintForm = () => {
     try {
       const userData = { name, email, phone };
       const user = await createUser(userData);
+      console.log("Data", user);
       if (user) router.push(`/patient/${user.$id}/register`);
     } catch (error) {
       console.log(error);
-    } 
+    }
   }
   return (
     <Form {...form}>
