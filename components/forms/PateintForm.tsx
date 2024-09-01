@@ -42,7 +42,7 @@ const PateintForm = () => {
     try {
       const userData = { name, email, phone };
       const user = await createUser(userData);
-      console.log("Data", user);
+
       if (user) router.push(`/patient/${user.$id}/register`);
     } catch (error) {
       console.log(error);
