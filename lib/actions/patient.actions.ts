@@ -11,13 +11,11 @@ export const createUser = async (user: CreateUserParams) => {
       undefined,
       user.name
     );
-    console.log("Hello", newUser);
     return parseStringify({ newUser });
   } catch (error: any) {
     if (error && error?.code === 409) {
       const documents = await users.list([Query.equal("email", user.email)]);
       return documents?.users[0];
-    }  
+    }
   }
 };
-  
