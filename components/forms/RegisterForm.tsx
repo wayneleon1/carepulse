@@ -11,7 +11,9 @@ import { UserFormValidation } from "@/lib/validation";
 import { useRouter } from "next/navigation";
 import { createUser } from "@/lib/actions/patient.actions";
 import { FormFieldType } from "./PateintForm";
-import { RadioGroup } from "../ui/radio-group";
+import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
+import { GenderOptions } from "@/constants";
+import { Label } from "../ui/label";
 
 const RegisterForm = ({ user }: { user: User }) => {
   const router = useRouter();
@@ -101,7 +103,17 @@ const RegisterForm = ({ user }: { user: User }) => {
                   className="flex h-11 gap-6 xl:justify-between"
                   onValueChange={field.onChange}
                   defaultValue={field.value}
-                ></RadioGroup>
+                >
+                  {GenderOptions.map((option) => (
+                    <div key={option} className="radio-group">
+                      <RadioGroupItem value={option} id={option}>
+                        <Label htmlFor={option} className="cursor-pointer">
+                          {option}
+                        </Label>
+                      </RadioGroupItem>
+                    </div>
+                  ))}
+                </RadioGroup>
               </FormControl>
             )}
           />
