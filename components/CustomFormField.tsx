@@ -41,6 +41,7 @@ const RenderField = ({ field, props }: { field: any; props: CustomeProps }) => {
     placeholder,
     showTimeSelect,
     dateFormat,
+    renderSkeleton,
   } = props;
   switch (fieldType) {
     case FormFieldType.INPUT:
@@ -100,6 +101,8 @@ const RenderField = ({ field, props }: { field: any; props: CustomeProps }) => {
           </FormControl>
         </div>
       );
+    case FormFieldType.SKELETON:
+      return renderSkeleton ? renderSkeleton(field) : null;
     default:
       break;
   }

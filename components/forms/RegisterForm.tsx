@@ -106,11 +106,10 @@ const RegisterForm = ({ user }: { user: User }) => {
                 >
                   {GenderOptions.map((option) => (
                     <div key={option} className="radio-group">
-                      <RadioGroupItem value={option} id={option}>
-                        <Label htmlFor={option} className="cursor-pointer">
-                          {option}
-                        </Label>
-                      </RadioGroupItem>
+                      <RadioGroupItem value={option} id={option} />
+                      <Label htmlFor={option} className="cursor-pointer">
+                        {option}
+                      </Label>
                     </div>
                   ))}
                 </RadioGroup>
@@ -118,6 +117,44 @@ const RegisterForm = ({ user }: { user: User }) => {
             )}
           />
         </div>
+
+        <div className="flex flex-col gap-6 xl:flex-row">
+          <CustomFormField
+            control={form.control}
+            fieldType={FormFieldType.INPUT}
+            name="address"
+            label="Address"
+            placeholder="123 Main St, New York"
+          />
+          <CustomFormField
+            control={form.control}
+            fieldType={FormFieldType.INPUT}
+            name="occupation"
+            label="Occupation"
+            placeholder="Software Engineer"
+          />
+        </div>
+        <div className="flex flex-col gap-6 xl:flex-row">
+          <CustomFormField
+            control={form.control}
+            fieldType={FormFieldType.INPUT}
+            name="emergencyContactName"
+            label="Emergency contact name"
+            placeholder="Guardian's name"
+          />
+          <CustomFormField
+            control={form.control}
+            fieldType={FormFieldType.PHONE_INPUT}
+            name="emergencyContactNumber"
+            label="Emergency contact  number"
+            placeholder="(555) 123-4567"
+          />
+        </div>
+        <section className="space-y-6">
+          <div className="mb-9 space-x-1">
+            <h2 className="sub-header">Medical Information</h2>
+          </div>
+        </section>
         <SubmitButton isLoading={isLoading}>Get Started</SubmitButton>
       </form>
     </Form>
