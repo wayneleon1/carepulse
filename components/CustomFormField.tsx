@@ -17,6 +17,7 @@ import { FormFieldType } from "./forms/PateintForm";
 import Image from "next/image";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { Select, SelectContent, SelectTrigger, SelectValue } from "./ui/select";
 
 interface CustomeProps {
   control: Control<any>;
@@ -100,6 +101,21 @@ const RenderField = ({ field, props }: { field: any; props: CustomeProps }) => {
             />
           </FormControl>
         </div>
+      );
+    case FormFieldType.SELECT:
+      return (
+        <FormControl>
+          <Select onValueChange={field.onChange} defaultValue={field.value}>
+            <FormControl>
+              <SelectTrigger className="shad-select-trigger">
+                <SelectValue placeholder={placeholder} />
+              </SelectTrigger>
+            </FormControl>
+            <SelectContent className="shad-select-content">
+              {props.children}
+            </SelectContent>
+          </Select>
+        </FormControl>
       );
     case FormFieldType.SKELETON:
       return renderSkeleton ? renderSkeleton(field) : null;
