@@ -26,6 +26,7 @@ import FileUploader from "../FileUploader";
 const RegisterForm = ({ user }: { user: User }) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+
   const form = useForm<z.infer<typeof PatientFormValidation>>({
     resolver: zodResolver(PatientFormValidation),
     defaultValues: {
@@ -120,7 +121,7 @@ const RegisterForm = ({ user }: { user: User }) => {
             control={form.control}
             fieldType={FormFieldType.SKELETON}
             name="gender"
-            label=" Gender"
+            label="Gender"
             renderSkeleton={(field) => (
               <FormControl>
                 <RadioGroup

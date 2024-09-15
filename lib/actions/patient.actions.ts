@@ -1,9 +1,9 @@
 "use server";
 
-import { ID, Query } from "node-appwrite";
+import { Databases, ID, Query } from "node-appwrite";
 import {
   BUCKET_ID,
-  database,
+  databases,
   DATABASE_ID,
   ENDPOINT,
   PATIENT_COLLECTION_ID,
@@ -16,30 +16,38 @@ import { InputFile } from "node-appwrite/file";
 
 export const createUser = async (user: CreateUserParams) => {
   try {
-    const newUser = await users.create(
+    const newuser = await users.create(
       ID.unique(),
       user.email,
       user.phone,
       undefined,
       user.name
     );
-    return parseStringify(newUser);
+
+    return parseStringify(newuser);
   } catch (error: any) {
+    // Check existing user
     if (error && error?.code === 409) {
       const existingUser = await users.list([
         Query.equal("email", [user.email]),
       ]);
+
       return existingUser.users[0];
     }
+    console.error("An error occurred while creating a new user:", error);
   }
 };
 
+// GET USER
 export const getUser = async (userId: string) => {
   try {
     const user = await users.get(userId);
     return parseStringify(user);
   } catch (error) {
-    console.log(error);
+    console.error(
+      "An error occurred while retrieving the user details:",
+      error
+    );
   }
 };
 
@@ -56,15 +64,13 @@ export const registerPatient = async ({
       );
       file = await storage.createFile(BUCKET_ID!, ID.unique(), inputFile);
     }
-    const newPatient = await database.createDocument(
+    const newPatient = await databases.createDocument(
       DATABASE_ID!,
       PATIENT_COLLECTION_ID!,
       ID.unique(),
       {
-        identificationDocument: file?.$id || null,
-        identificationDocumentUrl: `${ENDPOINT}/storage/buckets/${BUCKET_ID}/files/${
-          file?.$id
-        }/view?project=${PROJECT_ID!}`,
+        identificationDocumentId: file?.$id || null,
+        identificationDocumentUrl: `${ENDPOINT}/storage/buckets/${BUCKET_ID}/files/${file?.$id}/view?project=${PROJECT_ID}`,
         ...patient,
       }
     );
