@@ -89,7 +89,7 @@ const RenderField = ({ field, props }: { field: any; props: CustomeProps }) => {
             withCountryCallingCode
             value={field.value as string | undefined}
             onChange={field.onChange}
-            className="shad-input"
+            className="input-phone"
           />
         </FormControl>
       );
