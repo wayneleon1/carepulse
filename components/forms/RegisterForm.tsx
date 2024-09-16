@@ -228,8 +228,8 @@ const RegisterForm = ({ user }: { user: User }) => {
           <CustomFormField
             control={form.control}
             fieldType={FormFieldType.TEXTAREA}
-            name="curentMedications"
-            label="Insurance Policy Number"
+            name="currentMedication"
+            label="Current Medication"
             placeholder="Ibuprofen, 200mg, Paracetamol 500mg"
           />
         </div>
