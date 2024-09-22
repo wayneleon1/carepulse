@@ -50,6 +50,7 @@ export const getUser = async (userId: string) => {
     );
   }
 };
+
 // GET PATIENT
 export const getPatient = async (userId: string) => {
   try {
