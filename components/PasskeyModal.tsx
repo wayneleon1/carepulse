@@ -9,10 +9,6 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-<<<<<<< HEAD
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-=======
 } from "@/components/ui/alert-dialog";
 import {
   InputOTP,
@@ -20,28 +16,21 @@ import {
   InputOTPSlot,
 } from "@/components/ui/input-otp";
 
->>>>>>> implement the ui design of Passkey Modal
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 const PasskeyModal = () => {
   const router = useRouter();
   const [open, setOpen] = useState(true);
-<<<<<<< HEAD
-=======
   const [passkey, setPasskey] = useState("");
   const [error, setError] = useState("");
->>>>>>> implement the ui design of Passkey Modal
 
   const closeModal = () => {
     setOpen(false);
     router.push("/");
   };
-<<<<<<< HEAD
-=======
 
   const validatePasskey = (e) => {};
->>>>>>> implement the ui design of Passkey Modal
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogContent className="shad-alert-dialog">
@@ -61,12 +50,6 @@ const PasskeyModal = () => {
             To access the admin dashboard, please enter your passkey.
           </AlertDialogDescription>
         </AlertDialogHeader>
-<<<<<<< HEAD
-        <div> </div>
-        <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction>Continue</AlertDialogAction>
-=======
         <div>
           <InputOTP
             maxLength={6}
@@ -95,7 +78,6 @@ const PasskeyModal = () => {
           >
             Enter Admin Passkey
           </AlertDialogAction>
->>>>>>> implement the ui design of Passkey Modal
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
