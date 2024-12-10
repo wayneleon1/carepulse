@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -17,20 +17,49 @@ import {
 } from "@/components/ui/input-otp";
 
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { encryptKey } from "@/lib/utils";
 
 const PasskeyModal = () => {
   const router = useRouter();
   const [open, setOpen] = useState(true);
+  const path = usePathname();
   const [passkey, setPasskey] = useState("");
   const [error, setError] = useState("");
+
+  const encryptedKey =
+    typeof window !== "undefined"
+      ? window.localStorage.getItem("passkey")
+      : null;
+
+  useEffect(() => {
+    if (path) {
+      if (passkey === process.env.NEXT_PUBLIC_ADMIN_PASSKEY) {
+        setOpen(false);
+        router.push("/admin");
+      } else {
+        setOpen(true);
+      }
+    }
+  }, [encryptedKey]);
 
   const closeModal = () => {
     setOpen(false);
     router.push("/");
   };
 
-  const validatePasskey = (e) => {};
+  const validatePasskey = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    e.preventDefault();
+    if (passkey === process.env.NEXT_PUBLIC_ADMIN_PASSKEY) {
+      const encryptedPasskey = encryptKey(passkey);
+      localStorage.setItem("passkey", encryptedPasskey);
+      setOpen(false);
+    } else {
+      setError("Invalid passkey, Please try again");
+    }
+  };
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogContent className="shad-alert-dialog">
